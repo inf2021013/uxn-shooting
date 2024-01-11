@@ -1,6 +1,6 @@
 
 
-( day4.tal )
+( shooting.tal )
 
 ( devices )
 |00 @System  [ &vector $2 &pad $6  &r $2 &g $2 &b $2 ]
@@ -26,7 +26,7 @@
     ( set screen/y to half of screen minus 4 )
       .Screen/height DEI2 HALF2 #0004 SUB2 .Screen/y DEO2
 
-    ( set sprite address )
+    ( set sprite address to spaceship)
     ;spaceship .Screen/addr DEO2
     #01 .Screen/sprite DEO
     ( assign controller vector )
@@ -34,8 +34,9 @@
 
     
 BRK
+( if any button is pressed the spaceship shoots )
 @on-controller ( -> )
-    ( set sprite address )
+    ( set sprite address to laserbeam)
     ;laserbeam .Screen/addr DEO2
     
     ( set screen vector )
@@ -45,15 +46,15 @@ BRK
 @on-frame ( -> )
 
     
-    ( 1: clear sprite )
+    ( 1: clear previous sprite )
     ( clear sprite from the fg )
     color-clear .Screen/sprite DEO
 
     ( 2: change position )
-    ( increment sprite/pos-x )
+    ( increment laserbeam sprite/pos-x )
     .sprite/pos-x LDZ2 #0004 ADD2 .sprite/pos-x STZ2
 
-    ( 3 : draw sprite )
+    ( 3 : draw sprite to the screen)
     ( load x coordinate from zero page and send to screen )
     .sprite/pos-x LDZ2 .Screen/x DEO2
 
